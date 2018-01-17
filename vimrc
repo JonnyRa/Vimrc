@@ -5,7 +5,6 @@
 augroup myCommands
 autocmd!
 
-
 colorscheme evening
 "improve searching to ignore case when everything is lowercase
 set ignorecase
@@ -50,6 +49,8 @@ command! SaveSession mksession! ~/.vim/sessions/pickup.vim
 "when splitting default to more natural positioning
 set splitbelow
 set splitright
+
+command! FormatJson %!python -m json.tool
 
 "////
 "automatically reload file when changes detected
@@ -110,9 +111,13 @@ set infercase
 "/////
 
 "black hole deletion for all modes
-noremap <leader>x "_x
-noremap <leader>q "_d
-noremap qq "_dd
+noremap x "_x
+noremap <leader>x x
+noremap <leader>q q
+noremap q "_d
+noremap Q "_dd
+"this is just inconsistent does yy by default instead!
+noremap Y y$
 
 "newlines without insert mode
 nnoremap <leader>o o<esc>
@@ -135,6 +140,11 @@ call plug#begin('~/.vim/plugged')
 
 "shorthand for installing plugins
 command! InstallPlugins update <bar> so % <bar> PlugInstall
+
+"change surrounding stuff 
+Plug 'https://github.com/tpope/vim-surround'
+"repeat motions from plugins - they have to use this plugin for it to work
+Plug 'tpope/vim-repeat'
 
 "/////
 "Asynchronous linting engine!
@@ -160,6 +170,7 @@ autocmd FileType haskell nnoremap <buffer> <silent> <leader>m :silent update <ba
 
 "change w etc to work on camelcase
 Plug 'chaoren/vim-wordmotion'
+let g:wordmotion_spaces = ''
 
 "/////
 "ag file searching integration

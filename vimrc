@@ -112,16 +112,22 @@ set infercase
 
 "black hole deletion for all modes
 noremap x "_x
+noremap d "_d
+noremap dd "_dd
+noremap D "_D
+noremap c "_c
+noremap cc "_cc
+noremap C "_C
 noremap <leader>x x
-noremap <leader>q q
-noremap q "_d
-noremap Q "_dd
+noremap <leader>d d
+noremap <leader>dd dd
+noremap <leader>D D
 "this is just inconsistent does yy by default instead!
 noremap Y y$
 
 "newlines without insert mode
-nnoremap <leader>o o<esc>
-nnoremap <leader>O O<esc>
+nnoremap <leader>o moo<esc>`o
+nnoremap <leader>O moO<esc>`o
 
 "sort out end of file crazyness
 autocmd FileType * set nofixendofline
@@ -166,7 +172,7 @@ Plug 'eagletmt/neco-ghc'
 
 "haskell automatic imports
 Plug 'dan-t/vim-hsimport'
-autocmd FileType haskell nnoremap <buffer> <silent> <leader>m :silent update <bar> HsimportSymbol<CR>
+autocmd FileType haskell nnoremap <buffer> <silent> <leader>hm :silent update <bar> HsimportSymbol<CR>
 
 "change w etc to work on camelcase
 Plug 'chaoren/vim-wordmotion'
@@ -180,9 +186,9 @@ Plug 'mileszs/ack.vim'
 let g:ackprg = 'ag --nogroup --nocolor --column'
 
 "Ack shortcuts
-nnoremap <silent> <Leader>f :Ack! '\b<cword>\b'<CR>
+nnoremap <silent> <Leader>ff :Ack! '\b<cword>\b'<CR>
 "note type gets both newtype and type
-autocmd FileType haskell,hamlet nnoremap <buffer> <silent> <Leader>d :Ack! '\b<cword>\s*::<bar>data\s+<cword>\b<bar>type\s+<cword>\b'<CR>
+autocmd FileType haskell,hamlet nnoremap <buffer> <silent> <Leader>fd :Ack! '\b<cword>\s*::<bar>data\s+<cword>\b<bar>type\s+<cword>\b'<CR>
 
 "///
 "not Ack but related
@@ -194,6 +200,8 @@ nnoremap <Leader>l :let @/ = '\(^\\|data\s\+\\|type\s\+\)'.expand("<cword>").'\>
 "next/previous definition
 nnoremap <Leader>n /^\w<cr>
 nnoremap <Leader>N ?^\w<cr>
+"go to imports
+nnoremap <Leader>i ?^import<cr>
 "///
 "/////
 
@@ -205,10 +213,10 @@ Plug 'junegunn/fzf.vim'
 Plug 'bitc/vim-hdevtools', {'for': 'haskell'}
 
 "setup shortcuts. these are only set in haskell buffers
-autocmd FileType haskell nnoremap <buffer> <Leader>t :HdevtoolsType<CR>
+autocmd FileType haskell nnoremap <buffer> <Leader>ht :HdevtoolsType<CR>
 "need execute here as for some reason HdevtoolsClear is trying to read '|' as an argument
 autocmd FileType haskell nnoremap <buffer> <silent> <space> :execute ":HdevtoolsClear"<bar>:ClearSearchHighlight<CR>
-autocmd FileType haskell nnoremap <buffer> <Leader>i :HdevtoolsInfo<CR>
+autocmd FileType haskell nnoremap <buffer> <Leader>hi :HdevtoolsInfo<CR>
 
 "nice filebrowsing
 Plug 'scrooloose/nerdtree'

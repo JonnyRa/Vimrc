@@ -140,14 +140,14 @@ set infercase
 "black hole deletion for all modes
 noremap x "_x
 noremap d "_d
-noremap dd "_dd
+nnoremap dd "_dd
 noremap D "_D
 noremap c "_c
-noremap cc "_cc
+nnoremap cc "_cc
 noremap C "_C
 noremap <leader>x x
 noremap <leader>d d
-noremap <leader>dd dd
+nnoremap <leader>dd dd
 noremap <leader>D D
 "this is just inconsistent does yy by default instead!
 noremap Y y$

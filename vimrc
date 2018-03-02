@@ -219,7 +219,9 @@ let g:ackprg = 'ag --nogroup --nocolor --column'
 "Ack shortcuts
 nnoremap <silent> <Leader>ff :Ack! '\b<cword>\b'<CR>
 "note type gets both newtype and type
-autocmd FileType haskell,hamlet nnoremap <buffer> <silent> <Leader>fd :Ack! '\b<cword>\s*::<bar>data\s+<cword>\b<bar>type\s+<cword>\b'<CR>
+nnoremap <silent> <Leader>fd :FindDefinition <cword><cr>
+
+command! -nargs=1 -complete=tag FindDefinition :Ack! "'\b".<args>.'\s*::<bar>data\s+'<args>'\b<bar>type\s+'.<args>"\b'"<CR>
 
 "///
 "not Ack but related

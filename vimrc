@@ -162,6 +162,80 @@ nnoremap <leader>L i <esc>l
 "sort out end of file crazyness
 autocmd FileType * set nofixendofline
 
+"//////
+"make a way of going from lcd to cd
+au VimEnter * let g:my_project_dir = getcwd()
+command! -nargs=? -complete=dir Cd execute 'cd' <q-args> | let g:my_project_dir=getcwd()
+cnoreabbrev <expr> cd getcmdtype()==':' && getcmdline()=='cd' ? 'Cd' : 'cd'
+
+command! RestoreCwd execute 'cd' g:my_project_dir
+command! ShowFilename echo expand('%')
+"/////
+
+let s:lastNamespace = ""
+function! MakeImportForCurrentFile()
+  let splitName = split(expand('%'),'/')
+  let startOfNamespace = -1
+  let index = 0
+
+  let sourceDirectoryNames = ["src", "gen"] 
+  for bitOfPath in splitName
+    let index += 1
+    if index(sourceDirectoryNames, bitOfPath) >= 0
+      let startOfNamespace=index
+    endif
+  endfor
+
+  if startOfNamespace == -1
+    let startOfNamespace = 0
+  endif
+
+  let namespaceBits = splitName[startOfNamespace:]
+  let filenameIndex = len(namespaceBits)-1
+  let filename = RemoveExtension(namespaceBits[filenameIndex])
+
+  let namespaceBits[filenameIndex] = filename
+
+  let s:lastNamespace = join (namespaceBits, ".")
+  let s:lastNamespace = 'import ' . s:lastNamespace 
+endfunction
+
+function! RemoveExtension(filename)
+  "need both single quotes and backslash here to make . work!
+  let splitFilename = split(a:filename,'\.')
+
+  "filenames dont always have extensions
+  if splitFilename != []
+    return splitFilename[0]
+  endif
+
+  return a:filename
+endfunction
+
+function! GetLastNamespace()
+  return s:lastNamespace
+endfunction
+
+nnoremap <leader>ig :call MakeImportForCurrentFile()<cr>
+nnoremap <leader>ii :put=GetLastNamespace()<cr>
+nmap <leader>ai mI<C-]><leader>ig<C-^><leader>gi<leader>ii`I
+"/////////
+
+"finding .imports file
+function! OpenImportFileInSplit()
+  let cmd = "findImportFile " . RemoveExtension(expand("%:t")) 
+  silent let importFileList = systemlist(cmd)
+
+  if len(importFileList) != 1
+    echo "couldn't find file"
+    return
+  endif
+
+  execute "split " .importFileList[0]
+
+endfunction         
+
+nnoremap <leader>io :call OpenImportFileInSplit()<cr>
 
 """""""""""""""""
 "vim-plug section
@@ -234,7 +308,7 @@ nnoremap <Leader>fl :let @/ = '\(^\\|data\s\+\\|type\s\+\)'.expand("<cword>").'\
 nnoremap <Leader>n /^\w<cr>
 nnoremap <Leader>N ?^\w<cr>
 "go to imports
-nnoremap <Leader>i ?^import<cr>
+nnoremap <Leader>gi ?^import<cr>
 "///
 "/////
 

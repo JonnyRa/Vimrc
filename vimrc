@@ -125,6 +125,7 @@ if has('pythonx')
     "autocmd FileType haskell nnoremap <buffer> <silent> <c-]> :pyx qualified_tag.tag_word(vim)<cr>
 endif
 "/////
+
 "AUTOCOMPLETE
 "change basic autocomplete to only work in current buffer and ones open in other windows
 set complete=.,w

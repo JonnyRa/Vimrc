@@ -315,6 +315,10 @@ nnoremap <Leader>gi ?^import<cr>
 "fuzzy find
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
+nnoremap <C-t> :Tags<cr> 
+nnoremap <C-_> :execute "Tags ".expand('<cword>')<cr>
+command! -bang -nargs=? -complete=dir HFiles
+  \ call fzf#vim#files(<q-args>, {'source': 'ag -u --ignore .hg -g ""'}, <bang>0)
 
 "type information
 Plug 'bitc/vim-hdevtools', {'for': 'haskell'}

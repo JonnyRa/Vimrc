@@ -332,12 +332,6 @@ autocmd FileType haskell nnoremap <buffer> <Leader>hi :HdevtoolsInfo<CR>
 "nice filebrowsing
 Plug 'scrooloose/nerdtree'
 
-"automatically apply hlint suggestions
-Plug 'mpickering/hlint-refactor-vim'
-"stop it setting up own keybindings (overwrites t(ill) motion)
-let g:hlintRefactor#disableDefaultKeybindings = 1
-nnoremap <leader>r :call ApplyOneSuggestion()<cr>
-
 "better syntax highlighting for haskell + cabal 
 Plug 'neovimhaskell/haskell-vim'
 "switch indenting off - looks like it ignores context 

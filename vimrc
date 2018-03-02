@@ -180,7 +180,7 @@ command! -bar ReSource update <bar> so %
 command! InstallPlugins ReSource | PlugInstall
 
 "change surrounding stuff 
-Plug 'https://github.com/tpope/vim-surround'
+Plug 'tpope/vim-surround'
 "repeat motions from plugins - they have to use this plugin for it to work
 Plug 'tpope/vim-repeat'
 

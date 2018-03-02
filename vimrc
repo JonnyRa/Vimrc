@@ -156,6 +156,9 @@ noremap Y y$
 nnoremap <leader>o moo<esc>`o
 nnoremap <leader>O moO<esc>`o
 
+nnoremap <leader>l a <esc>
+nnoremap <leader>L i <esc>l
+
 "sort out end of file crazyness
 autocmd FileType * set nofixendofline
 
@@ -222,7 +225,7 @@ autocmd FileType haskell,hamlet nnoremap <buffer> <silent> <Leader>fd :Ack! '\b<
 
 "find local definition
 "note dot here is concatenation. need double escaping for some reason. single quotes need less escaping!
-nnoremap <Leader>l :let @/ = '\(^\\|data\s\+\\|type\s\+\)'.expand("<cword>").'\>'<cr>n
+nnoremap <Leader>fl :let @/ = '\(^\\|data\s\+\\|type\s\+\)'.expand("<cword>").'\>'<cr>n
 
 "next/previous definition
 nnoremap <Leader>n /^\w<cr>

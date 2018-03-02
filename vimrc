@@ -196,7 +196,6 @@ let g:ale_haskell_stack_build_options = '--fast --work-dir .stack-work-ale --tes
 nmap <silent> <C-k> <Plug>(ale_previous_wrap)
 nmap <silent> <C-j> <Plug>(ale_next_wrap)
 nnoremap <C-h> :ALEDetail <cr>
-nnoremap <C-l> :ALELint <cr>
 "/////
 
 "haskell autocomplete

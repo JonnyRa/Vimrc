@@ -132,7 +132,7 @@ set complete=.,w,t
 "unix like completion - longest substring
 set completeopt+=longest
 "add command to retrigger longest substring
-inoremap <expr> <C-M> pumvisible() ? "\<C-e><C-n>" : "\<C-m>"
+inoremap <expr> <C-j> pumvisible() ? "\<C-e><C-n>" : "\<C-j>"
 "help is confusing but this basically stops autocomplete making your completion uppercase when doing a longest match
 set infercase
 "/////

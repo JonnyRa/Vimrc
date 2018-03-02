@@ -177,7 +177,7 @@ call plug#begin('~/.vim/plugged')
 command! -bar ReSource update <bar> so %
 
 "shorthand for installing plugins
-command! InstallPlugins update <bar> so % <bar> PlugInstall
+command! InstallPlugins ReSource | PlugInstall
 
 "change surrounding stuff 
 Plug 'https://github.com/tpope/vim-surround'

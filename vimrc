@@ -174,6 +174,8 @@ autocmd FileType * set nofixendofline
 " - Avoid using standard Vim directory names like 'plugin'
 call plug#begin('~/.vim/plugged')
 
+command! -bar ReSource update <bar> so %
+
 "shorthand for installing plugins
 command! InstallPlugins update <bar> so % <bar> PlugInstall
 

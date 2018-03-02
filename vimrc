@@ -205,9 +205,9 @@ Plug 'eagletmt/neco-ghc'
 Plug 'dan-t/vim-hsimport'
 autocmd FileType haskell nnoremap <buffer> <silent> <leader>hm :silent update <bar> HsimportSymbol<CR>
 
-"change w etc to work on camelcase
-Plug 'chaoren/vim-wordmotion'
-let g:wordmotion_spaces = ''
+"add \w etc for camelcase
+Plug 'bkad/CamelCaseMotion'
+call camelcasemotion#CreateMotionMappings('<leader>')
 
 "/////
 "ag file searching integration

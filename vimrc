@@ -66,6 +66,19 @@ autocmd FileChangedShellPost *
 "make CursorHold happen quicker - every second rather than default 4 seconds
 set updatetime=1000
 
+"/////
+"error stuff
+
+let s:root = expand('<sfile>:p:h')
+function! SourceLocal(relativePath)
+  let fullPath = s:root . '/'. a:relativePath
+  exec 'source ' . fullPath
+endfunction
+
+call SourceLocal ("errors.vim")
+
+nnoremap <leader>re :ReadErrors<cr>
+
 "////
 
 set hlsearch "highlight stuff when searching

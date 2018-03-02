@@ -128,7 +128,7 @@ endif
 
 "AUTOCOMPLETE
 "change basic autocomplete to only work in current buffer and ones open in other windows
-set complete=.,w
+set complete=.,w,t
 "unix like completion - longest substring
 set completeopt+=longest
 "add command to retrigger longest substring

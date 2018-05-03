@@ -29,6 +29,56 @@ set shiftwidth=4
 set expandtab
 """"""""""""""
 
+" this automatically resizes windows upon selection to 5
+set winheight=5
+"get rid of win only command (right next to previous window!). replace with moving the preview back/forwards
+"ctrl-w_i is also by default mapped the same as <c-w>] (but more hacky than tags!)
+nnoremap <silent> <C-w>o :call SwapToPreviewAndRun(function('<SID>GoBack'))<cr>
+nnoremap <silent> <C-w>i :call SwapToPreviewAndRun(function('<SID>GoForward'))<cr>
+
+nmap <silent> <C-w>= :call ResizeAllWindows()<cr>
+nnoremap <silent> \z :call SwapToPreviewAndRun(function('<SID>CentreViewOnCursor'))<cr>
+
+function! ResizeAllWindows()
+  call RestorePreviewWindowHeight()
+  wincmd = "set all equal after restore
+endfunction
+
+function! s:SetPreviewHeight()
+  exec 'resize' &previewheight 
+endfunction 
+
+function! RestorePreviewWindowHeight()
+  silent call SwapToPreviewAndRun (function('<SID>SetPreviewHeight'))
+endfunction
+
+function! s:CentreViewOnCursor()
+  normal! zz
+endfunction 
+
+function! s:GoBack()
+  execute "normal! \<C-o>"
+endfunction 
+
+function! s:GoForward()
+  "bizzarely need 1 prefixed here because ctrl-i makes a tab character
+  "and tab counts as space so normal! doesn't think we've input anything!
+  execute "normal! 1\<C-i>"
+endfunction 
+
+function! SwapToPreviewAndRun(funk)
+  let oldWindowId = win_getid()
+  silent! wincmd P "jump to preview, but don't show error
+  if &previewwindow
+    silent call a:funk()
+    let previewWindowId = win_getid()
+    if previewWindowId != oldWindowId
+      wincmd p "jump back
+    endif
+  endif
+
+endfunction
+
 "stop prompting to force when leaving an unsaved buffer, just make it hidden
 set hidden
 
@@ -63,6 +113,13 @@ autocmd FocusGained,BufEnter,CursorHold,CursorHoldI * if !bufexists("[Command Li
 autocmd FileChangedShellPost *
   \ echohl WarningMsg | echo "File changed on disk. Buffer reloaded." | echohl None
 
+"set a mark when we hang around for a while - this means it gets added to the jump list
+autocmd CursorHold * 
+\ if expand('<afile>') !~? 'nerd_tree' 
+\|  exec ":normal m`<cr>"
+\|endif
+
+
 "make CursorHold happen quicker - every second rather than default 4 seconds
 set updatetime=1000
 
@@ -75,7 +132,7 @@ function! SourceLocal(relativePath)
   exec 'source ' . fullPath
 endfunction
 
-call SourceLocal ("errors.vim")
+call SourceLocal ('errors.vim')
 
 nnoremap <leader>re :ReadErrors<cr>
 
@@ -99,12 +156,14 @@ nmap <leader>V <leader>v :resize<cr>
 "ttimeoutlen speeds up esc key presses!
 set timeout timeoutlen=3000 ttimeoutlen=0
 
+autocmd FileType vim set tabstop=2|set shiftwidth=2
+
 "///
 "Status line stuff
 "status line containing 50 character max filename, modified flag, readonly
 "flag, file type, buffer number, line|character percentage through file
 "
-set statusline=%.50F%m%r\ %y\ buffer\ %n\ %l\|%c\ [%p%%]
+set statusline=%.50F%m%r\ %y\%w\ buffer\ %n\ %l\|%c\ [%p%%]
 "better colours
 highlight StatusLine ctermfg=Blue ctermbg=Yellow
 "always show the statusline
@@ -113,10 +172,8 @@ set laststatus=2
 
 "///fast-tag stuff
 "calls a shell script to dump in all the haskell files
-augroup tags
-    au BufWritePost *.hs            silent !init-tags %
-    au BufWritePost *.hsc           silent !init-tags %
-augroup END
+autocmd BufWritePost *.hs            silent !init-tags %
+autocmd BufWritePost *.hsc           silent !init-tags %
 
 if has('pythonx')
     pyx import sys, os, vim
@@ -127,8 +184,9 @@ endif
 "/////
 
 "AUTOCOMPLETE
-"change basic autocomplete to only work in current buffer and ones open in other windows
-set complete=.,w,t
+"change basic autocomplete to only work in current buffer and ones open in other windows 
+"use C-x C-] for tags or add t to this list
+set complete=.,w
 "unix like completion - longest substring
 set completeopt+=longest
 "add command to retrigger longest substring
@@ -147,8 +205,10 @@ nnoremap cc "_cc
 noremap C "_C
 noremap <leader>x x
 noremap <leader>d d
+noremap <leader>c c
 nnoremap <leader>dd dd
 noremap <leader>D D
+noremap <leader>C C
 "this is just inconsistent does yy by default instead!
 noremap Y y$
 
@@ -162,6 +222,82 @@ nnoremap <leader>L i <esc>l
 "sort out end of file crazyness
 autocmd FileType * set nofixendofline
 
+nnoremap <silent> <leader>mh :call MoveWindow('h')<cr>
+nnoremap <silent> <leader>ml :call MoveWindow('l')<cr>
+
+"direction is either 'h' for left or 'l' for right
+function! MoveWindow(direction)
+  let currentBuffer = winbufnr(0)
+  let oldWindowId = win_getid()
+
+  "set mark
+  normal! mM
+
+  "move focus
+  execute "normal \<c-w>".a:direction
+
+  "add new window with the correct buffer
+  split
+  execute 'buffer' currentBuffer
+
+  "close old window
+  let windowNumber = win_id2win(oldWindowId)
+  execute "normal \<c-w>".windowNumber.'w'
+  quit
+
+  "swap back to the new one and load the mark
+  execute "normal \<c-w>p"
+  normal! `M
+
+endfunction
+
+function! ClearBlankLines()
+  let viewInfo = winsaveview()
+  %s/^\s\+$//e
+  call winrestview(viewInfo)
+endfunction
+
+command! ClearBlankLines call ClearBlankLines()
+
+function! RemoveSwapFileIfExists()
+  let path = expand('%:p:h')
+  let filename = expand ('%:t')
+
+  let extraCharacter = ''
+  if filename[0] !=# '.'
+    let extraCharacter = '.'
+  endif
+
+  let swapFilenameWithoutLast = path. '/' . extraCharacter . filename . '.sw'
+
+  "ends up with a newline at the start
+  let currentSwapName = split(execute ('swapname'), "\n")[0]
+
+  let absoluteSwapName = fnamemodify(currentSwapName, ':p')
+
+  let endCharacters = ['p','o','n']
+  for character in endCharacters
+    let fullSwapFilename = swapFilenameWithoutLast . character
+    if fullSwapFilename == absoluteSwapName
+      continue
+    endif 
+
+    "this is almost a file exists check
+    if filereadable(fullSwapFilename)
+      "this is zero when it worked negative otherwise
+      let worked = delete(fullSwapFilename)
+      let workedText = "WARNING couldn't delete"
+      if worked==0
+        let workedText = 'successfully deleted'
+      endif
+
+      echo workedText fullSwapFilename 
+    endif
+
+  endfor 
+endfunction
+
+
 "//////
 "make a way of going from lcd to cd
 au VimEnter * let g:my_project_dir = getcwd()
@@ -172,58 +308,9 @@ command! RestoreCwd execute 'cd' g:my_project_dir
 command! ShowFilename echo expand('%')
 "/////
 
-let s:lastNamespace = ""
-function! MakeImportForCurrentFile()
-  let splitName = split(expand('%'),'/')
-  let startOfNamespace = -1
-  let index = 0
-
-  let sourceDirectoryNames = ["src", "gen"] 
-  for bitOfPath in splitName
-    let index += 1
-    if index(sourceDirectoryNames, bitOfPath) >= 0
-      let startOfNamespace=index
-    endif
-  endfor
-
-  if startOfNamespace == -1
-    let startOfNamespace = 0
-  endif
-
-  let namespaceBits = splitName[startOfNamespace:]
-  let filenameIndex = len(namespaceBits)-1
-  let filename = RemoveExtension(namespaceBits[filenameIndex])
-
-  let namespaceBits[filenameIndex] = filename
-
-  let s:lastNamespace = join (namespaceBits, ".")
-  let s:lastNamespace = 'import ' . s:lastNamespace 
-endfunction
-
-function! RemoveExtension(filename)
-  "need both single quotes and backslash here to make . work!
-  let splitFilename = split(a:filename,'\.')
-
-  "filenames dont always have extensions
-  if splitFilename != []
-    return splitFilename[0]
-  endif
-
-  return a:filename
-endfunction
-
-function! GetLastNamespace()
-  return s:lastNamespace
-endfunction
-
-nnoremap <leader>ig :call MakeImportForCurrentFile()<cr>
-nnoremap <leader>ii :put=GetLastNamespace()<cr>
-nmap <leader>ai mI<C-]><leader>ig<C-^><leader>gi<leader>ii`I
-"/////////
-
 "finding .imports file
 function! OpenImportFileInSplit()
-  let cmd = "findImportFile " . RemoveExtension(expand("%:t")) 
+  let cmd = 'findImportFile ' . RemoveExtension(expand('%:t')) 
   silent let importFileList = systemlist(cmd)
 
   if len(importFileList) != 1
@@ -231,7 +318,7 @@ function! OpenImportFileInSplit()
     return
   endif
 
-  execute "split " .importFileList[0]
+  execute 'split ' .importFileList[0]
 
 endfunction         
 
@@ -253,6 +340,15 @@ command! -bar ReSource update <bar> so %
 "shorthand for installing plugins
 command! InstallPlugins ReSource | PlugInstall
 
+"delete buffers without getting rid of splits (:Bdelete - notice capital!)
+Plug 'moll/vim-bbye'
+
+"swap things! g> g< gs
+Plug 'machakann/vim-swap'
+
+"vimscript linter
+Plug 'syngan/vim-vimlint'
+
 "change surrounding stuff 
 Plug 'tpope/vim-surround'
 "repeat motions from plugins - they have to use this plugin for it to work
@@ -263,8 +359,11 @@ Plug 'tpope/vim-repeat'
 "fast syntax checking
 Plug 'w0rp/ale'
 "this disables some linters that don't work
+"also vim one is not turned on by default
 let g:ale_linters = {
-\   'haskell': ['stack-build','stack-build!!', 'hlint', 'hdevtools', 'hfmt' ],
+\   'haskell': ['stack-ghc', 'hlint', 'hdevtools', 'hfmt' ]
+\,  'cs': []
+\,  'vim': ['vint']
 \}
 let g:ale_haskell_stack_build_options = '--fast --work-dir .stack-work-ale --test --no-run-tests'
 nmap <silent> <C-k> <Plug>(ale_previous_wrap)
@@ -281,7 +380,10 @@ autocmd FileType haskell nnoremap <buffer> <silent> <leader>hm :silent update <b
 
 "add \w etc for camelcase
 Plug 'bkad/CamelCaseMotion'
-call camelcasemotion#CreateMotionMappings('<leader>')
+"set up the mappings further down as it causes an error on first load here
+
+"buffer viewing \b to open.  gb and gB swap through recently used files
+Plug 'jeetsukumaran/vim-buffergator'
 
 "/////
 "ag file searching integration
@@ -307,8 +409,6 @@ nnoremap <Leader>fl :let @/ = '\(^\\|data\s\+\\|type\s\+\)'.expand("<cword>").'\
 "next/previous definition
 nnoremap <Leader>n /^\w\+.*\n\w\+.*<cr>
 nnoremap <Leader>N ?^\w\+.*\n\w\+.*<cr>
-"go to imports
-nnoremap <Leader>gi ?^import<cr>
 "///
 "/////
 
@@ -319,9 +419,10 @@ nnoremap <C-t> :Tags<cr>
 nnoremap <C-_> :execute "Tags ".expand('<cword>')<cr>
 command! -bang -nargs=? -complete=dir HFiles
   \ call fzf#vim#files(<q-args>, {'source': 'ag -u --ignore .hg -g ""'}, <bang>0)
+nnoremap <C-n> :Buffers<cr>
 
 "type information
-Plug 'bitc/vim-hdevtools', {'for': 'haskell'}
+Plug 'bitc/vim-hdevtools'
 
 "setup shortcuts. these are only set in haskell buffers
 autocmd FileType haskell nnoremap <buffer> <Leader>ht :HdevtoolsType<CR>
@@ -356,8 +457,14 @@ Plug 'kburdett/vim-nuuid'
 "n of m searching + also quicker than native
 Plug 'google/vim-searchindex'
 
+"haskell import stuff
+Plug 'JonnyRa/vim-himposter'
+let g:himporterCreateMappings = 1
+
 " Initialize plugin system
 call plug#end()
 
 "finish the command augroup
 augroup END
+
+call camelcasemotion#CreateMotionMappings('<leader>')

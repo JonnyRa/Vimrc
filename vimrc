@@ -45,7 +45,18 @@ function! ResizeAllWindows()
 endfunction
 
 function! s:SetPreviewHeight()
-  exec 'resize' &previewheight 
+  let windowNumber = winnr() 
+  let position = win_screenpos(windowNumber)
+  let positionOfNext = win_screenpos(windowNumber +1) 
+  let column = position[1]
+
+  "this is pretty hacky! guesswork really 
+  let isInSecondColumnWithSomethingElse = column > 10 && positionOfNext != [0,0]
+  let isInFirstColumnButSpansTheWholeWidth = column == 1 && positionOfNext == [0,0]
+
+  if isInSecondColumnWithSomethingElse || isInFirstColumnButSpansTheWholeWidth
+    exec 'resize' &previewheight 
+  endif
 endfunction 
 
 function! RestorePreviewWindowHeight()

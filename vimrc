@@ -30,6 +30,19 @@ set shiftwidth=4
 " On pressing tab, insert spaces instead of tab
 set expandtab
 """"""""""""""
+"last tab
+if !exists('g:lastTabVisited')
+  let g:lastTabVisited = 1
+endif 
+
+nnoremap \tp  :call <SID>swapToLastTab()<CR>
+autocmd TabLeave * let g:lastTabVisited = tabpagenr()
+
+function! s:swapToLastTab()
+  :exe 'tabn' g:lastTabVisited 
+endfunction
+
+""""""""""""""
 
 " this automatically resizes windows upon selection to 5
 set winheight=5

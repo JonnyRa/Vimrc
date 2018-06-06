@@ -127,6 +127,7 @@ set splitbelow
 set splitright
 
 command! FormatJson %!python -m json.tool
+command! FormatHaskell %!pretty-simple | ansifilter
 
 "////
 "automatically reload file when changes detected

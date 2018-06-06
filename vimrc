@@ -203,7 +203,7 @@ autocmd FileType vim set tabstop=2|set shiftwidth=2
 "
 set statusline=%.50F%m%r\ %y\%w\ buffer\ %n\ %l\|%c\ [%p%%]
 "better colours
-highlight StatusLine ctermfg=Blue ctermbg=Yellow
+highlight StatusLine ctermfg=DarkBlue ctermbg=Yellow
 "always show the statusline
 set laststatus=2
 "///
@@ -486,8 +486,8 @@ Plug 'yssl/QFEnter'
 Plug 'mkitt/tabline.vim'
 "do some colouring:
 highlight TabLine      ctermfg=Black  ctermbg=White       cterm=NONE
-highlight TabLineFill  ctermfg=Black  ctermbg=LightYellow cterm=NONE
-highlight TabLineSel   ctermfg=White  ctermbg=DarkBlue    cterm=NONE
+highlight TabLineFill  ctermfg=Black  ctermbg=Yellow      cterm=NONE
+highlight TabLineSel   ctermfg=Yellow ctermbg=DarkBlue    cterm=NONE
 
 "make uuids with <leader-u>
 Plug 'kburdett/vim-nuuid'

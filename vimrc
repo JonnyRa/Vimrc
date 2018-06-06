@@ -62,14 +62,16 @@ endfunction
 function! s:SetPreviewHeight()
   let windowNumber = winnr() 
   let position = win_screenpos(windowNumber)
+  let positionOfPrevious = win_screenpos(windowNumber -1) 
   let positionOfNext = win_screenpos(windowNumber +1) 
   let column = position[1]
+  let previousColumn = positionOfPrevious[1]
+  let nextColumn = positionOfNext[1]
 
-  "this is pretty hacky! guesswork really 
-  let isInSecondColumnWithSomethingElse = column > 10 && positionOfNext != [0,0]
+  let isInColumnOnItsOwn = column != previousColumn && column != nextColumn
   let isInFirstColumnButSpansTheWholeWidth = column == 1 && positionOfNext == [0,0]
 
-  if isInSecondColumnWithSomethingElse || isInFirstColumnButSpansTheWholeWidth
+  if !isInColumnOnItsOwn || isInFirstColumnButSpansTheWholeWidth
     exec 'resize' &previewheight 
   endif
 endfunction 

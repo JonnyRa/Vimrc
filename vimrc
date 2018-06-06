@@ -142,21 +142,31 @@ autocmd FocusGained,BufEnter,CursorHold,CursorHoldI * if !bufexists("[Command Li
 autocmd FileChangedShellPost *
   \ echohl WarningMsg | echo "File changed on disk. Buffer reloaded." | echohl None
 
-let s:markTimer = -1
+let g:markTimer = -1
 
 "set a mark when we hang around for a while - this means it gets added to the jump list
-autocmd CursorHold * let s:markTimer = timer_start (10 * 1000, function('<SID>SetMark', [expand('<afile>')]))
+"autocmd CursorHold * call <SID>StartTimer()
+
+function! s:StartTimer()
+  let g:markTimer = timer_start (10 * 1000, function('<SID>SetMark', [expand('<afile>')]))
+  "echo 'started timer' g:markTimer
+endfunction
 
 function! s:SetMark(filename, id)
   if a:filename !~? 'nerd_tree' 
+   "echo 'set mark'
    exec ':normal m`<cr>'
   endif
 endfunction 
 
-autocmd CursorMoved * 
-\if s:markTimer != -1
-\|  call timer_stop(s:markTimer)
-\|  let s:markTimer = -1
+let stopCalled = 'never'
+
+autocmd CursorMoved,InsertEnter * 
+\if g:markTimer != -1
+\|  "echo 'calledStop' g:markTimer
+\|  call timer_stop(g:markTimer)
+\|  let stopCalled = g:markTimer . " " . strftime("%X")
+\|  let g:markTimer = -1
 \|endif
 
 

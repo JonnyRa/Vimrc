@@ -16,6 +16,8 @@ set showcmd
 "line numbers
 set number
 
+command! Wall windo update
+
 """"""""""""""
 "sort out tabs
 """"""""""""""

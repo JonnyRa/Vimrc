@@ -136,6 +136,8 @@ set splitright
 command! FormatJson %!python -m json.tool
 command! FormatHaskell %!pretty-simple | ansifilter
 
+autocmd FileType haskell :set cindent
+
 "////
 "automatically reload file when changes detected
 set autoread "this doesn't work on it's own!

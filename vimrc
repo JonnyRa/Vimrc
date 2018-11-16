@@ -447,6 +447,9 @@ Plug 'tpope/vim-surround'
 "repeat motions from plugins - they have to use this plugin for it to work
 Plug 'tpope/vim-repeat'
 
+"shorthand for bracketing to the end
+nmap <leader>) ys$)
+
 "/////
 "Asynchronous linting engine!
 "fast syntax checking

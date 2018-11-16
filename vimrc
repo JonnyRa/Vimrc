@@ -55,7 +55,9 @@ nnoremap <silent> <C-w>o :call SwapToPreviewAndRun(function('<SID>GoBack'))<cr>
 nnoremap <silent> <C-w>i :call SwapToPreviewAndRun(function('<SID>GoForward'))<cr>
 
 nmap <silent> <C-w>= :call ResizeAllWindows()<cr>
-nnoremap <silent> \z :call SwapToPreviewAndRun(function('<SID>CentreViewOnCursor'))<cr>
+nnoremap <silent> <leader>zz :call SwapToPreviewAndRun(function('<SID>RunNormal', ['zz']))<cr>
+nnoremap <silent> <leader>zt :call SwapToPreviewAndRun(function('<SID>RunNormal', ['zt']))<cr>
+nnoremap <silent> <leader>zb :call SwapToPreviewAndRun(function('<SID>RunNormal', ['zb']))<cr>
 
 function! ResizeAllWindows()
   call RestorePreviewWindowHeight()
@@ -83,8 +85,8 @@ function! RestorePreviewWindowHeight()
   silent call SwapToPreviewAndRun (function('<SID>SetPreviewHeight'))
 endfunction
 
-function! s:CentreViewOnCursor()
-  normal! zz
+function! s:RunNormal(command)
+  exec 'normal!' a:command 
 endfunction 
 
 function! s:GoBack()

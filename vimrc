@@ -492,6 +492,8 @@ Plug 'mileszs/ack.vim'
 "get ack to run ag!
 let g:ackprg = 'ag --nogroup --nocolor --column'
 
+command! -nargs=1 Find execute "Ack!" "-Q" '"'.<args>.'"'
+
 "Ack shortcuts
 nnoremap <silent> <Leader>ff :Ack! '\b<cword>\b'<CR>
 "note type gets both newtype and type

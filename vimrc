@@ -279,13 +279,18 @@ nnoremap <leader>L i <esc>l
 "sort out end of file crazyness
 autocmd FileType * set nofixendofline
 
-nnoremap <silent> <leader>mh :call MoveWindow('h')<cr>
-nnoremap <silent> <leader>ml :call MoveWindow('l')<cr>
+nnoremap <silent> <leader>mh :silent call MoveWindow('h')<cr>
+nnoremap <silent> <leader>ml :silent call MoveWindow('l')<cr>
 
 "direction is either 'h' for left or 'l' for right
 function! MoveWindow(direction)
+  "note when debugging in here might need to put in multiple echos as last one tends to get overwritten by confusing window info!
   let currentBuffer = winbufnr(0)
   let oldWindowId = win_getid()
+
+  echom 'oldWindowId' oldWindowId
+  echom 'currentBuffer' currentBuffer
+  echom 'winnr' winnr()
 
   "set mark
   normal! mM
@@ -293,17 +298,26 @@ function! MoveWindow(direction)
   "move focus
   execute "normal \<c-w>".a:direction
 
+  echom 'splitting window'
   "add new window with the correct buffer
   split
   execute 'buffer' currentBuffer
 
   "close old window
   let windowNumber = win_id2win(oldWindowId)
+  echom 'window to close' windowNumber
+  "need to get hold of this here as otherwise gets screwed up
+  echom 'previous window after split' winnr('#')
   execute "normal \<c-w>".windowNumber.'w'
+  echom 'previous window after swapping to window to close' winnr('#')
+  let previousWindowBeforeClose = winnr('#')
   quit
+  echom 'closed window' windowNumber
 
   "swap back to the new one and load the mark
-  execute "normal \<c-w>p"
+  echom 'previous window after close' winnr('#')
+  echo 'swapping to previous before close'
+  execute "normal \<c-w>".previousWindowBeforeClose.'w'
   normal! `M
 
 endfunction

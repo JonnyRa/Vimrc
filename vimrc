@@ -496,6 +496,7 @@ command! -nargs=1 Find execute "Ack!" "-Q" '"'.<args>.'"'
 
 "Ack shortcuts
 nnoremap <silent> <Leader>ff :Ack! '\b<cword>\b'<CR>
+nnoremap <silent> <Leader>fg :Ack! '<cword>'<CR>
 "note type gets both newtype and type
 nnoremap <silent> <Leader>fd :FindDefinition <cword><cr>
 

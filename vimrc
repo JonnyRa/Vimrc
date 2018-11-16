@@ -16,6 +16,9 @@ set showcmd
 "line numbers
 set number
 
+"sort out copy + paste
+set clipboard=unnamedplus
+
 command! Wall windo update
 
 """"""""""""""

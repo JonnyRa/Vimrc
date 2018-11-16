@@ -422,7 +422,7 @@ nnoremap <leader>io :call OpenImportFileInSplit()<cr>
 " - Avoid using standard Vim directory names like 'plugin'
 call plug#begin('~/.vim/plugged')
 
-command! -bar ReSource update <bar> so %
+command! -bar ReSource update <bar> so $MYVIMRC
 
 "shorthand for installing plugins
 command! InstallPlugins ReSource | PlugInstall

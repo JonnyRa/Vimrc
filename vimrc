@@ -512,6 +512,7 @@ nnoremap <Leader>N ?^\w\+.*\n\w\+.*<cr>
 "fuzzy find
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
+
 nnoremap <C-t> :Tags<cr> 
 nnoremap <C-_> :execute "Tags ".expand('<cword>')<cr>
 command! -bang -nargs=? -complete=dir HFiles

@@ -427,6 +427,12 @@ command! -bar ReSource update <bar> so $MYVIMRC
 "shorthand for installing plugins
 command! InstallPlugins ReSource | PlugInstall
 
+"lets you edit things in the quick fix and delete entries
+Plug 'stefandtw/quickfix-reflector.vim'
+
+"powershell syntax
+Plug 'PProvost/vim-ps1'
+
 "delete buffers without getting rid of splits (:Bdelete - notice capital!)
 Plug 'moll/vim-bbye'
 
@@ -469,8 +475,12 @@ autocmd FileType haskell nnoremap <buffer> <silent> <leader>hm :silent update <b
 Plug 'bkad/CamelCaseMotion'
 "set up the mappings further down as it causes an error on first load here
 
-"buffer viewing \b to open.  gb and gB swap through recently used files
+"buffer viewing.  gb and gB swap through recently used files
 Plug 'jeetsukumaran/vim-buffergator'
+nnoremap <silent> <leader>q :BuffergatorOpen<cr>
+
+Plug 'AndrewRadev/undoquit.vim'
+let g:undoquit_mapping = ''
 
 "/////
 "ag file searching integration

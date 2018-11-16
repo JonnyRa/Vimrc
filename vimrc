@@ -393,6 +393,22 @@ function! OpenImportFileInSplit()
 
 endfunction         
 
+function! RemoveExtension(filename)
+  "need both single quotes and backslash here to make . work!
+  let splitFilename = split(a:filename,'\.')
+
+  "filenames dont always have extensions
+  if splitFilename != []
+    return splitFilename[0]
+  endif
+
+  return a:filename
+endfunction
+
+
+
+nnoremap <Leader>gm ?^module<cr>
+
 nnoremap <leader>io :call OpenImportFileInSplit()<cr>
 
 """""""""""""""""

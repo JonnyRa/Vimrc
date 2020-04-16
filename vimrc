@@ -523,8 +523,8 @@ command! -nargs=1 -complete=tag FindDefinition :Ack! "'\b".<args>.'\s*::<bar>dat
 nnoremap <Leader>fl :let @/ = '\(^\\|data\s\+\\|type\s\+\)'.expand("<cword>").'\>'<cr>n
 
 "next/previous definition
-nnoremap <Leader>n /^\w\+.*::<cr>
-nnoremap <Leader>N ?^\w\+.*::<cr>
+nnoremap <Leader>n /^\w\+[\n ]*\s*::<cr>
+nnoremap <Leader>N ?^\w\+[\n ]*\s*::<cr>
 "///
 "/////
 

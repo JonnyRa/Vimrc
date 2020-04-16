@@ -492,7 +492,8 @@ Plug 'bkad/CamelCaseMotion'
 
 "buffer viewing.  gb and gB swap through recently used files
 Plug 'jeetsukumaran/vim-buffergator'
-nnoremap <silent> <leader>q :BuffergatorOpen<cr>
+nnoremap <silent> <leader>q :BuffergatorToggle<cr>
+let g:buffergator_autodismiss_on_select = 0
 
 Plug 'AndrewRadev/undoquit.vim'
 let g:undoquit_mapping = ''

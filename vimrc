@@ -572,6 +572,7 @@ Plug 'mkitt/tabline.vim'
 highlight TabLine      ctermfg=Black  ctermbg=White       cterm=NONE
 highlight TabLineFill  ctermfg=Black  ctermbg=Yellow      cterm=NONE
 highlight TabLineSel   ctermfg=Yellow ctermbg=DarkBlue    cterm=NONE
+highlight Normal       ctermbg=Black
 
 "make uuids with <leader-u>
 Plug 'kburdett/vim-nuuid'

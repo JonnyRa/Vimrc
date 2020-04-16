@@ -435,6 +435,9 @@ command! -bar ReSource update <bar> so $MYVIMRC
 "shorthand for installing plugins
 command! InstallPlugins ReSource | PlugInstall
 
+"move by indent level
+Plug 'jeetsukumaran/vim-indentwise'
+
 "lets you edit things in the quick fix and delete entries
 Plug 'stefandtw/quickfix-reflector.vim'
 

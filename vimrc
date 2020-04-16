@@ -25,7 +25,7 @@ set relativenumber
 "sort out copy + paste
 set clipboard=unnamedplus
 
-command! Wall windo update
+command! Wall silent! wa
 
 """"""""""""""
 "sort out tabs

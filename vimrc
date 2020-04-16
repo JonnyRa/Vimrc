@@ -388,11 +388,12 @@ command! ShowFilename echo expand('%')
 
 "finding .imports file
 function! OpenImportFileInSplit()
-  let cmd = 'findImportFile ' . RemoveExtension(expand('%:t')) 
+  let filename = RemoveExtension(expand('%:t')) 
+  let cmd = 'findImportFile ' . filename
   silent let importFileList = systemlist(cmd)
 
   if len(importFileList) != 1
-    echo "couldn't find file"
+    echo "couldn't find file " . filename
     return
   endif
 

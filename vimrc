@@ -32,9 +32,9 @@ command! Wall silent! wa
 """"""""""""""
 "switch on filetype detection and look at how stuff should be indented for each language
 filetype plugin indent on
-" show existing tab with 4 spaces width
+" show existing tab with 2 spaces width
 set tabstop=2
-" when indenting with '>', use 4 spaces width
+" when indenting with '>', use 2 spaces width
 set shiftwidth=2
 " On pressing tab, insert spaces instead of tab
 set expandtab

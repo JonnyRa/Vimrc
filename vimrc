@@ -189,9 +189,8 @@ function! SourceLocal(relativePath)
   exec 'source ' . fullPath
 endfunction
 
-call SourceLocal ('errors.vim')
-
-nnoremap <leader>re :ReadErrors<cr>
+"<expr> lets you use <cword> and expand in a mapping
+nnoremap <expr> <leader>rw ':%s/\<'.expand('<cword>').'\>/'
 
 "////
 
@@ -569,6 +568,9 @@ Plug 'google/vim-searchindex'
 "haskell import stuff
 Plug 'JonnyRa/vim-himposter'
 let g:himporterCreateMappings = 1
+
+Plug 'JonnyRa/vim-stackThoseErrorsOfHs', { 'do': './install' }
+let g:stackThoseErrorsCreateMappings = 1
 
 " Initialize plugin system
 call plug#end()

@@ -20,6 +20,7 @@ set smartcase
 set showcmd
 "line numbers
 set number
+set relativenumber
 
 "sort out copy + paste
 set clipboard=unnamedplus

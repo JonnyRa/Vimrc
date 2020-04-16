@@ -457,6 +457,7 @@ Plug 'tpope/vim-repeat'
 
 "shorthand for bracketing to the end
 nmap <leader>) ys$)
+nmap <leader>2) ys2w)
 
 "/////
 "Asynchronous linting engine!

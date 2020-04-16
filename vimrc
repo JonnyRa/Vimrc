@@ -142,7 +142,8 @@ set splitright
 
 command! FormatJson %!python -m json.tool
 command! FormatHaskell %!pretty-simple | ansifilter
-
+command! HTMLToXML %!xmllint --format --recover - 2>/dev/null
+command! -nargs=1 RunXPath :w !xmllint --xpath <args> -
 autocmd FileType haskell :set cindent
 
 "////

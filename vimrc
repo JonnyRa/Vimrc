@@ -5,6 +5,11 @@
 augroup myCommands
 autocmd!
 
+augroup vue
+  au!
+  autocmd BufNewFile,BufRead *.vue   set syntax=html
+augroup END
+
 colorscheme evening
 "improve searching to ignore case when everything is lowercase
 set ignorecase

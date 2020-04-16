@@ -133,6 +133,7 @@ autocmd FileType * setlocal formatoptions-=r formatoptions-=o
 
 "stop sessions saving all random options
 set sessionoptions-=options
+set sessionoptions-=buffers
 command! SaveSession mksession! ~/.vim/sessions/pickup.vim
 
 "when splitting default to more natural positioning

@@ -465,6 +465,7 @@ Plug 'tpope/vim-repeat'
 
 "shorthand for bracketing to the end
 nmap <leader>) ys$)
+nmap <leader>1) ys1w)
 nmap <leader>2) ys2w)
 
 "/////

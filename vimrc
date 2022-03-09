@@ -22,6 +22,9 @@ set showcmd
 set number
 set relativenumber
 
+set grepprg=ag\ --vimgrep\ $* 
+set grepformat=%f:%l:%c:%m
+
 "sort out copy + paste
 set clipboard=unnamedplus
 

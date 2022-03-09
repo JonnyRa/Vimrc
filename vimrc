@@ -544,7 +544,7 @@ nnoremap <C-t> :Tags<cr>
 nnoremap <C-_> :execute "Tags ".expand('<cword>')<cr>
 command! -bang -nargs=? -complete=dir HFiles
   \ call fzf#vim#files(<q-args>, {'source': 'ag -u --ignore .hg -g ""'}, <bang>0)
-nnoremap <C-n> :Buffers<cr>
+nnoremap <C-n> :Files<cr>
 let g:fzf_action = {
   \ 'ctrl-t': 'tab split',
   \ 'ctrl-x': 'split',

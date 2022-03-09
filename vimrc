@@ -149,6 +149,9 @@ command! HTMLToXML %!xmllint --format --recover - 2>/dev/null
 command! -nargs=1 RunXPath :w !xmllint --xpath <args> -
 autocmd FileType haskell :set cindent
 
+"when you type a hash as the first character stop it triggering reindent
+set cinkeys -=0#
+
 "////
 "automatically reload file when changes detected
 set autoread "this doesn't work on it's own!

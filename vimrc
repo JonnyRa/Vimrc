@@ -446,9 +446,6 @@ command! InstallPlugins ReSource | PlugInstall
 "move by indent level
 Plug 'jeetsukumaran/vim-indentwise'
 
-"lets you edit things in the quick fix and delete entries
-Plug 'stefandtw/quickfix-reflector.vim'
-
 "powershell syntax
 Plug 'PProvost/vim-ps1'
 

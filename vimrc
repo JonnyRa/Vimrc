@@ -159,11 +159,17 @@ augroup reload
   au!
   "https://unix.stackexchange.com/questions/149209/refresh-changed-content-of-file-opened-in-vim/383044#383044
   "on these events, any filename... and not in command mode then check files for changes
-  autocmd FocusGained,BufEnter,CursorHold,CursorHoldI * if !bufexists("[Command Line]") && filereadable(expand('%')) | silent! checktime % | endif
+  autocmd FocusGained,BufEnter,CursorHold,CursorHoldI * if !bufexists("[Command Line]") && filereadable(expand('%')) | call Checktime(expand('%')) | endif
   " Notification after file change
   autocmd FileChangedShellPost *
     \ echohl WarningMsg | echo "File changed on disk. Buffer reloaded." | echohl None
 augroup END
+
+function! Checktime(filename) abort
+    let l:winview = winsaveview()
+    silent! checktime filename
+    call winrestview(l:winview)
+endfunction
 
 let g:markTimer = -1
 

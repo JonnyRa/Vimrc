@@ -167,7 +167,7 @@ augroup END
 
 function! Checktime(filename) abort
     let l:winview = winsaveview()
-    silent! checktime filename
+    silent! execute "checktime" a:filename
     call winrestview(l:winview)
 endfunction
 

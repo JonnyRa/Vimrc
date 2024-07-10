@@ -140,7 +140,16 @@ autocmd FileType * setlocal formatoptions-=r formatoptions-=o
 "stop sessions saving all random options
 set sessionoptions-=options
 set sessionoptions-=buffers
-command! SaveSession mksession! ~/.vim/sessions/pickup.vim
+command! SaveSession call SaveCurrentSession()
+
+function! SaveCurrentSession()
+  if len(v:this_session) == 0
+    echo "no session loaded - use mksession ~/.vim/sessions/blah.vim to make a new one"
+    return
+  endif
+
+  :exe "mksession!" v:this_session
+endfunction
 
 "when splitting default to more natural positioning
 set splitbelow

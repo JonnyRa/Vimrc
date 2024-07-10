@@ -515,6 +515,7 @@ let g:undoquit_mapping = ''
 ":Ack [options] {pattern} [{directories}]
 Plug 'mileszs/ack.vim'
 "get ack to run ag!
+"note use -s to do case sensitive, it uses smartcase by default
 let g:ackprg = 'ag --nogroup --nocolor --column'
 
 command! -nargs=1 Find execute "Ack!" "-Q" '"'.<args>.'"'

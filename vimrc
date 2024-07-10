@@ -1,14 +1,14 @@
+augroup vue
+  au!
+  autocmd BufNewFile,BufRead *.vue   set syntax=html
+augroup END
+
 "clear out previous autocmds to stop them being duplicated when resourcing
 "this file
 "but put them in a group to stop others being tinkered with... unclear if this
 "causes issues or not
 augroup myCommands
 autocmd!
-
-augroup vue
-  au!
-  autocmd BufNewFile,BufRead *.vue   set syntax=html
-augroup END
 
 colorscheme evening
 "improve searching to ignore case when everything is lowercase

@@ -22,6 +22,9 @@ set showcmd
 set number
 set relativenumber
 
+"sort problems with weird @ symbols replacing lines sometimes
+set display=lastline
+
 set grepprg=ag\ --vimgrep\ $* 
 set grepformat=%f:%l:%c:%m
 

@@ -30,6 +30,11 @@ set grepformat=%f:%l:%c:%m
 
 "sort out copy + paste
 set clipboard=unnamedplus
+"disable mouse wheel scrolling
+"seems that either tmux or gnome-terminal converts scroll into up/down key presses
+"think this is more annoying that the problem it fixes because it means you can't use the up/down keys
+":nmap <Up> <Nop>
+":nmap <Down> <Nop>
 
 command! Wall silent! wa
 

@@ -30,6 +30,9 @@ set grepformat=%f:%l:%c:%m
 
 "sort out copy + paste
 set clipboard=unnamedplus
+"toggle pastemode easily.  This is handy when pasting in insert mode from tmux to stop the content being indented
+set pastetoggle=<F2>
+
 "disable mouse wheel scrolling
 "seems that either tmux or gnome-terminal converts scroll into up/down key presses
 "think this is more annoying that the problem it fixes because it means you can't use the up/down keys

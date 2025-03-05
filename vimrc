@@ -101,6 +101,25 @@ nnoremap <silent> <leader>zb :call SwapToPreviewAndRun(function('<SID>RunNormal'
 function! ResizeAllWindows()
   call RestorePreviewWindowHeight()
   wincmd = "set all equal after restore
+  call s:SetMinimumHeightOnSmallWindows()
+endfunction
+
+function! s:SetMinimumHeightOnSmallWindows()
+  "v:val is a special iteration set variable representing the current item
+  "qf also detects location list but that's ok
+  let quickfixWindowList = filter(range(1, winnr('$')), 'getwinvar(v:val, "&ft") == "qf"')
+  "track current window so can swap back
+  let currentWindow = winnr()
+  wincmd p
+  let previousWindow = winnr()
+  "track previous window so we don't mess with <ctrl-w> p
+  for windowNumber in quickfixWindowList
+    "swap to window and resize
+    exec windowNumber "wincmd w"
+    resize 5
+  endfor
+  exec previousWindow "wincmd w" 
+  exec currentWindow "wincmd w" 
 endfunction
 
 function! s:SetPreviewHeight()

@@ -429,8 +429,14 @@ command! -nargs=? -complete=dir Cd execute 'cd' <q-args> | let g:my_project_dir=
 cnoreabbrev <expr> cd getcmdtype()==':' && getcmdline()=='cd' ? 'Cd' : 'cd'
 
 command! RestoreCwd execute 'cd' g:my_project_dir
-command! ShowFilename echo expand('%')
+command! ShowFilename call ShowFilename()
 "/////
+
+function! ShowFilename()
+  let path = expand('%')
+  echo path
+  let @+ = path."\n"
+endfunction
 
 "finding .imports file
 function! OpenImportFileInSplit()

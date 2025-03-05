@@ -162,15 +162,17 @@ function! s:GoForward()
 endfunction 
 
 function! SwapToPreviewAndRun(funk)
-  let oldWindowId = win_getid()
+  let currentWindow = winnr()
+  wincmd p
+  let previousWindow = winnr()
+
   silent! wincmd P "jump to preview, but don't show error
   if &previewwindow
     silent call a:funk()
-    let previewWindowId = win_getid()
-    if previewWindowId != oldWindowId
-      wincmd p "jump back
-    endif
   endif
+
+  exec previousWindow "wincmd w" 
+  exec currentWindow "wincmd w" 
 
 endfunction
 

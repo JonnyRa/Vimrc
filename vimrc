@@ -23,6 +23,10 @@ augroup END
 augroup myCommands
 autocmd!
 
+"change background for insert mode
+autocmd InsertEnter * set bg=light
+autocmd InsertLeave * set bg=dark
+
 colorscheme evening
 "improve searching to ignore case when everything is lowercase
 set ignorecase

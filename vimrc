@@ -105,6 +105,7 @@ endfunction
 
 function! s:SetPreviewHeight()
   let windowNumber = winnr() 
+  "returns one-indexed [row,col].  [0,0] if the window not found
   let position = win_screenpos(windowNumber)
   let positionOfPrevious = win_screenpos(windowNumber -1) 
   let positionOfNext = win_screenpos(windowNumber +1) 
@@ -112,6 +113,9 @@ function! s:SetPreviewHeight()
   let previousColumn = positionOfPrevious[1]
   let nextColumn = positionOfNext[1]
 
+  "not sure these conclusions can be drawn - should probably iterate through all windows
+  "could do something a bit like this (but different query to iterate through windows
+  ":echo filter(range(1, winnr('$')), 'getwinvar(v:val, "&ft") == "qf"')
   let isInColumnOnItsOwn = column != previousColumn && column != nextColumn
   let isInFirstColumnButSpansTheWholeWidth = column == 1 && positionOfNext == [0,0]
 

@@ -164,6 +164,9 @@ set textwidth=0 "stop line breaks being inserted when lines are too long
 "and when using (o) to add a newline in normal mode
 autocmd FileType * setlocal formatoptions-=r formatoptions-=o
 
+"stop everything resizing when splitting a window
+set noequalalways
+
 "stop sessions saving all random options
 set sessionoptions-=options
 set sessionoptions-=buffers

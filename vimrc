@@ -548,9 +548,11 @@ let g:undoquit_mapping = ''
 Plug 'mileszs/ack.vim'
 "get ack to run ag!
 "note use -s to do case sensitive, it uses smartcase by default
+
+"use (?=thing) (?!thing) to positive/negative lookahead
 let g:ackprg = 'ag --nogroup --nocolor --column'
 
-command! -nargs=1 Find execute "Ack!" "-Q" '"'.<args>.'"'
+command! -nargs=1 Find execute "Ack!" "-Q" "--" '"'.<args>.'"'
 
 "Ack shortcuts
 nnoremap <silent> <Leader>ff :Ack! '\b<cword>\b'<CR>

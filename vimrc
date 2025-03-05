@@ -55,6 +55,8 @@ set pastetoggle=<F2>
 "think this is more annoying that the problem it fixes because it means you can't use the up/down keys
 ":nmap <Up> <Nop>
 ":nmap <Down> <Nop>
+"switch off mouse interactions
+set mouse=
 
 command! Wall silent! wa
 

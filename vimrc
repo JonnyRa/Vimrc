@@ -310,6 +310,9 @@ noremap D "_D
 noremap c "_c
 nnoremap cc "_cc
 noremap C "_C
+"I've never used this intentionally to copy/affect the clipboard so no leader one for this 
+noremap s "_s
+
 noremap <leader>x x
 noremap <leader>d d
 noremap <leader>c c

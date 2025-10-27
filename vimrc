@@ -90,6 +90,7 @@ endfunction
 set winheight=5
 "get rid of win only command (right next to previous window!). replace with moving the preview back/forwards
 "ctrl-w_i is also by default mapped the same as <c-w>] (but more hacky than tags!)
+nnoremap <C-w><C-o> <Nop>
 nnoremap <silent> <C-w>o :call SwapToPreviewAndRun(function('<SID>GoBack'))<cr>
 nnoremap <silent> <C-w>i :call SwapToPreviewAndRun(function('<SID>GoForward'))<cr>
 

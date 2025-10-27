@@ -622,6 +622,9 @@ let g:fzf_action = {
   \ 'ctrl-v': 'vsplit',
   \ 'ctrl-p': 'pedit'}
 
+"change preview of tags etc to not take up width for filenames
+let g:fzf_preview_window = ['up:5']
+
 "type information
 Plug 'bitc/vim-hdevtools'
 

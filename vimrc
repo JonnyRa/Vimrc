@@ -303,19 +303,6 @@ highlight StatusLine ctermfg=DarkBlue ctermbg=Yellow
 set laststatus=2
 "///
 
-"///fast-tag stuff
-"calls a shell script to dump in all the haskell files
-autocmd BufWritePost *.hs            silent !init-tags %
-autocmd BufWritePost *.hsc           silent !init-tags %
-
-if has('pythonx')
-    pyx import sys, os, vim
-    pyx sys.path.insert(0, os.environ['HOME'] + '/.vim/py')
-    pyx import qualified_tag
-    "autocmd FileType haskell nnoremap <buffer> <silent> <c-]> :pyx qualified_tag.tag_word(vim)<cr>
-endif
-"/////
-
 "AUTOCOMPLETE
 "change basic autocomplete to only work in current buffer and ones open in other windows 
 "use C-x C-] for tags or add t to this list
@@ -670,6 +657,8 @@ let g:himporterCreateMappings = 1
 
 Plug 'JonnyRa/vim-stackThoseErrorsOfHs', { 'do': './install' }
 let g:stackThoseErrorsCreateMappings = 1
+
+Plug 'JonnyRa/fast-tags-vim', { 'do': './install' }
 
 " Initialize plugin system
 call plug#end()

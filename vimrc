@@ -105,6 +105,14 @@ function! ResizeAllWindows()
   call s:SetMinimumHeightOnSmallWindows()
 endfunction
 
+nmap <silent> <C-w>[ :call ResizeVertically()<cr>
+
+function! ResizeVertically()
+  call RestorePreviewWindowHeight()
+  set ead=ver ea noea
+  call s:SetMinimumHeightOnSmallWindows()
+endfunction
+
 function! s:SetMinimumHeightOnSmallWindows()
   "v:val is a special iteration set variable representing the current item
   "qf also detects location list but that's ok

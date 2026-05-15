@@ -486,10 +486,6 @@ function! RemoveExtension(filename)
   return a:filename
 endfunction
 
-
-
-nnoremap <Leader>gm ?^module<cr>
-
 nnoremap <leader>io :call OpenImportFileInSplit()<cr>
 
 """""""""""""""""

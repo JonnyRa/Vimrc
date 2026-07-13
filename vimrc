@@ -630,9 +630,6 @@ Plug 'neovimhaskell/haskell-vim'
 "switch indenting off - looks like it ignores context 
 let g:haskell_indent_disable=1
 
-"syntax for delphi
-Plug 'mattia72/vim-delphi' 
-
 "yesod template syntax highlighting
 Plug 'pbrisbin/vim-syntax-shakespeare'
 

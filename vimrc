@@ -542,7 +542,7 @@ Plug 'w0rp/ale'
 "this disables some linters that don't work
 "also vim one is not turned on by default
 let g:ale_linters = {
-\   'haskell': ['stack-ghc', 'hlint', 'hdevtools', 'hfmt' ]
+\   'haskell': ['stack-ghc', 'hlint', 'hfmt' ]
 \,  'cs': []
 \,  'vim': ['vint']
 \}
@@ -554,10 +554,6 @@ nnoremap <C-h> :ALEDetail <cr>
 
 "haskell autocomplete
 Plug 'eagletmt/neco-ghc'
-
-"haskell automatic imports
-Plug 'dan-t/vim-hsimport'
-autocmd FileType haskell nnoremap <buffer> <silent> <leader>hm :silent update <bar> HsimportSymbol<CR>
 
 "add \w etc for camelcase
 Plug 'bkad/CamelCaseMotion'

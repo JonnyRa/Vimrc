@@ -618,6 +618,10 @@ let g:fzf_action = {
 "change preview of tags etc to not take up width for filenames
 let g:fzf_preview_window = ['up:5']
 
+"stop reuse of windows by nerd tree
+"reuse: none is buggy and will actually reuse things from other tabs!
+let g:NERDTreeCustomOpenArgs = {'file': {'reuse': 'currenttab', 'where': 'p', 'keepopen': 1}}
+
 "nice filebrowsing
 Plug 'scrooloose/nerdtree'
 
